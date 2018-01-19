@@ -24,7 +24,10 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 					ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
 					ft_strtrim.c ft_tolower.c ft_toupper.c ft_strlen_num.c ft_list_size.c \
 					ft_whiteskip.c ft_num_of_words.c ft_strlen_until_char.c ft_itoa_base.c\
-					../typizator.c ft_itoa_long_long.c ft_white_swap.c ../modify.c
+					../typizator.c ft_itoa_long_long.c ft_white_swap.c ../modify.c ../width.c\
+					../flagerson.c ../presicion.c ../char_maneger.c ft_itoa_long_unsigned.c \
+					ft_itoa_long_long_unsigned.c ft_itoa_base_long.c ft_itoa_base_long_unsigned.c\
+					ft_itoa_base_long_long.c ft_itoa_base_unsigned_long_long.c
 LIB_NAME = libft.h
 OBJ = ./*.o
 FLAG = -Wall -Wextra -Werror -c

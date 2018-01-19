@@ -18,7 +18,7 @@
 # include <string.h>
 # include <stdlib.h>
 #include "../ft_printf.h"
-# include "libft.h"
+# include "./libft.h"
 
 typedef struct		s_list
 {
@@ -30,6 +30,7 @@ typedef enum	t
 {
 	none,
 	s,
+	S,
 	p,
 	d,
 	i,
@@ -49,6 +50,14 @@ typedef enum		mode
 	J,
 	Z,
 } 					perech;
+typedef struct		s_flag
+{
+	int nil;
+	int minus;
+	int plus;
+	int space;
+	int hash;
+} 					t_flag;
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -114,8 +123,18 @@ int					ft_list_size(t_list *begin_list);
 void				ft_whiteskip(char **str);
 int					ft_num_of_words(char **arr);
 size_t				ft_strlen_until_char(const char *str, char c);
-char 				*ft_itoa_base(int value, int base, int whatcase);
-char 				*typizator(char *format, va_list *ap, int flag, typer *type);
+char 				*ft_itoa_base(unsigned int value, int base, int whatcase);
+char 				*typizator(char *format, va_list *ap, char *str, typer *type);
 char 				*ft_white_swap(char *str);
-char 				*modify(char *format, va_list *ap, perech *data, int *flag);
+char 				*modify(char *format, va_list *ap, perech *data);
+char 				*width(char *format, char *str, char c, typer type);
+char 				*flagerson(char *format, char *str, typer type);
+char 				*precision(char *format,char *str, typer type);
+void 				char_manege(char *format, va_list *ap);
+char				*ft_itoa_long_unsigned(unsigned long int n);
+char				*ft_itoa_long_long_unsigned(unsigned long long n);
+char 				*ft_itoa_base_long(long value, int base, int whatcase);
+char 				*ft_itoa_base_long_unsigned(unsigned long value, int base, int whatcase);
+char 				*ft_itoa_base_long_long(long long value, int base, int whatcase);
+char 				*ft_itoa_base_unsigned_long_long(unsigned long long value, int base, int whatcase);
 #endif
