@@ -5,79 +5,49 @@
 #                                                     +:+ +:+         +:+      #
 #    By: yyatsenk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/12/26 11:56:53 by yyatsenk          #+#    #+#              #
-#    Updated: 2017/12/26 11:56:54 by yyatsenk         ###   ########.fr        #
+#    Created: 2017/10/29 13:27:42 by yyatsenk          #+#    #+#              #
+#    Updated: 2017/11/15 16:20:04 by yyatsenk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
+NAME_L = libft.a
+SRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c \
+					libft/ft_isdigit.c libft/ft_isprint.c libft/ft_itoa_long.c libft/ft_lstadd.c libft/ft_lstdel.c \
+					libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstmap.c libft/ft_lstnew.c libft/ft_memalloc.c \
+					libft/ft_memccpy.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memdel.c \
+					libft/ft_memmove.c libft/ft_memset.c libft/ft_putchar.c libft/ft_putchar_fd.c libft/ft_putendl.c \
+					libft/ft_putendl_fd.c libft/ft_putnbr.c libft/ft_putnbr_fd.c libft/ft_putstr.c libft/ft_putstr_fd.c \
+					libft/ft_strcat.c libft/ft_strchr.c libft/ft_strclr.c libft/ft_strcmp.c libft/ft_strcpy.c \
+					libft/ft_strdel.c libft/ft_strdup.c libft/ft_strequ.c libft/ft_striter.c libft/ft_striteri.c \
+					libft/ft_strjoin.c libft/ft_strlcat.c libft/ft_strlen.c libft/ft_strmap.c libft/ft_strmapi.c \
+					libft/ft_strncat.c libft/ft_strncmp.c libft/ft_strncpy.c libft/ft_strnequ.c libft/ft_strnew.c \
+					libft/ft_strnstr.c libft/ft_strrchr.c libft/ft_strsplit.c libft/ft_strstr.c libft/ft_strsub.c \
+					libft/ft_strtrim.c libft/ft_tolower.c libft/ft_toupper.c libft/ft_strlen_num.c libft/ft_list_size.c \
+					libft/ft_whiteskip.c libft/ft_num_of_words.c libft/ft_strlen_until_char.c libft/ft_itoa_base.c\
+					typizator.c libft/ft_itoa_long_long.c libft/ft_white_swap.c modify.c width.c\
+					flagerson.c presicion.c char_maneger.c libft/ft_itoa_long_unsigned.c \
+					libft/ft_itoa_long_long_unsigned.c libft/ft_itoa_base_long.c libft/ft_itoa_base_long_unsigned.c\
+					libft/ft_itoa_base_long_long.c libft/ft_itoa_base_unsigned_long_long.c
+LIB_NAME = libft/libft.h
+OBJ = ./*.o
+FLAG = -c
 
-# Output settings
-DEFAULT	:=\033[0m
-BOLD	:=\033[1m
-GREEN	:=\033[0;32m
-RED		:=\033[0;31m
+all:$(NAME)
 
-# Compiler
-CC		= gcc
-FLAGS	= -Wall -Wextra -Werror
-
-# Directories
-SRC_DIR := ./src
-OBJ_DIR := ./obj
-INC_DIR := ./includes
-LFT_DIR := ./libft
-
-# Source files
-SRC :=	typizator.c 		\
-		ft_itoa_long_long.c	\
-		ft_white_swap.c 	\
-		modify.c\
-		width.c \
-		flagerson.c \
-		presicion.c\
-		char_maneger.c
-
-# Object files
-OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-
-#includes
-INC := $(addprefix -I, $(INC_DIR))
-
-# Libft
-LFT := libft.a
-
-.PHONY = all clean fclean re
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@echo "$(GREEN)Compiling libft...$(DEFAULT)"
-	@make -C $(LFT_DIR) all --silent
-	@echo "$(GREEN)Compiling $(NAME)...$(DEFAULT)"
-	@$(CC) $(FLAGS) $(OBJ) $(LFT_DIR)/$(LFT) -o $(NAME)
-	@echo "$(GREEN)$(BOLD)DONE.\n$(DEFAULT)"
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(FLAGS) $(INC) -c $< -o $@
-
+$(NAME):$(NAME_L)
+	@gcc $(FLAG) ft_printf.c ft_printf.h
+		@ar rc $(NAME) ft_printf.o libft/*.o
+			@ranlib $(NAME)
+$(NAME_L):$(SRC)
+	@gcc $(FLAG) $(SRC) $(LIB_NAME)
+		@ar rc $(NAME_L) $(OBJ)
+			@ranlib $(NAME_L)
 clean:
-	@echo "$(RED)Cleaning libft...$(DEFAULT)" 
-	@make -C $(LFT_DIR) clean --silent
-	@echo "$(RED)Cleaning $(NAME) o-files...$(DEFAULT)"
-	@rm -rf $(OBJ)
-	@rm -rf $(OBJ_DIR)
-	@echo "$(GREEN)$(BOLD)DONE.\n$(DEFAULT)"
-
+	rm -f $(OBJ)
+	#rm -f libft/*.o
+	find . \( -name "*~" -o -name "*.gch" -o -name ".DS_Store" \) -delete
 fclean: clean
-	@echo "$(RED)Deleting libft.a...$(DEFAULT)" 
-	@rm -rf $(LFT_DIR)/$(LFT)
-	@echo "$(RED)Deleting fillit...$(DEFAULT)" 
-	@rm -rf $(NAME)
-	@echo "$(GREEN)$(BOLD)DONE.\n$(DEFAULT)"
-
+	rm -f $(NAME)
+	rm -f libft/libft.a
 re: fclean all
-
-
-

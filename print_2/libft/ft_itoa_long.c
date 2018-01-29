@@ -32,6 +32,12 @@ char			*ft_itoa_long(long int n)
 	tmp_n = n;
 	if (n < 0)
 	{
+		if (n < -9223372036854775807)
+		{
+			str = ft_strnew(str_len);
+			str = "-9223372036854775808";
+			return (str);
+		}
 		tmp_n = -n;
 		str_len++;
 	}

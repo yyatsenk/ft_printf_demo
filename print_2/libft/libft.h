@@ -33,9 +33,12 @@ typedef enum	t
 	S,
 	p,
 	d,
+	D,
 	i,
 	o,
+	O,
 	u,
+	U,
 	x,
 	X,
 	c,
@@ -137,4 +140,17 @@ char 				*ft_itoa_base_long(long value, int base, int whatcase);
 char 				*ft_itoa_base_long_unsigned(unsigned long value, int base, int whatcase);
 char 				*ft_itoa_base_long_long(long long value, int base, int whatcase);
 char 				*ft_itoa_base_unsigned_long_long(unsigned long long value, int base, int whatcase);
+char 				*ft_itoa_base_ssize(ssize_t value, int base, int whatcase);
+char				*ft_itoa_long_ssize(ssize_t n);
+char				*ft_itoa_short(short int n);
+char				*ft_itoa_short_unsig(unsigned short int n);
+char 				*ft_itoa_base_unsig_short(unsigned short int value, int base, int whatcase);
+void				ft_putstr_null(char const *s);
+wchar_t				*ft_wstrjoin(wchar_t  *s1, wchar_t  *s2, int wstrlen);
+wchar_t				*ft_wstrnew(size_t size);
+wchar_t				*ft_wstrncpy(wchar_t *dst,  wchar_t *src, size_t len);
+wchar_t 			*ft_white_swap_wstr(wchar_t *str, int wstrlen);
+int 				ft_wstrlen(wchar_t *wstr);
+char 				*ft_itoa_base_size(size_t value, int base, int whatcase);
+int 				ft_wcharlen(wchar_t wstr);
 #endif
