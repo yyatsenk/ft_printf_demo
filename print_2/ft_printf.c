@@ -18,6 +18,21 @@
 #include "libft/libft.h"
 #include <limits.h>
 #include <wchar.h>
+int ft_size_bin(wint_t nb)
+{
+	int size;
+	char *str;
+	char *str_free;
+
+	size = 1;
+	//str = malloc(sizeof(*str));
+	//free(str);
+	str = NULL;
+	//free(str_free);
+	while (nb /= 2)
+		++size;
+	return (size);
+} 
 
 wchar_t	*ft_wstrncpy(wchar_t *dst,wchar_t *src, size_t len)
 {
@@ -37,19 +52,10 @@ wchar_t	*ft_wstrncpy(wchar_t *dst,wchar_t *src, size_t len)
 	i = -1;
 	while (src[++i] != '\0' && i < res)
 		dst[i] = src[i];
-	while (i < res)
-		dst[i++] = '\0';
+	dst[i] = L'\0';
 	return (dst);
 }
 
-
-int ft_size_bin(wchar_t value)
-{
-	char *str;
-
-	str = ft_itoa_base_long((long)value, 2, 0);
-	return (ft_strlen(str));
-} 
 wchar_t		*ft_wstrjoin(wchar_t  *s1, wchar_t *s2, int wstrlen)
 {
 	int		i;
@@ -90,7 +96,7 @@ int write_wchar(wchar_t value)
         unsigned int mask3= 4034953344;
  
         unsigned int v = value;
-        int size = ft_size_bin(value);
+        int size = ft_size_bin((long long int)value);
         int res = 0;
        // printf("size %d\n", size);
         unsigned char octet;
@@ -167,7 +173,7 @@ char			*ft_itoa_long(long int n)
 		if (n < -9223372036854775807)
 		{
 			str = ft_strnew(str_len);
-			str = "-9223372036854775808";
+			str = ft_strcpy(str,"-9223372036854775808");
 			return (str);
 		}
 		tmp_n = -n;
@@ -206,7 +212,7 @@ char			*ft_itoa_long_long(long long int n)
 		if (n < -9223372036854775807)
 		{
 			str = ft_strnew(str_len);
-			str = "-9223372036854775808";
+			str = ft_strcpy(str,"-9223372036854775808");
 			return (str);
 		}
 		tmp_n = -n;
@@ -268,6 +274,7 @@ static char *ft_white_swap_num(char *str, int space)
         res = ft_strjoin(res, white);
        	free(tmp_1);
        	free(tmp_2);
+       	free(str);
     }
     return (res);
 }
@@ -368,66 +375,10 @@ static char *width_char(char *format_line, char *str, char c, typer type)
 		str_new[i] = c;
 	str_new[i] = '\0';
 	str = ft_strjoin(str_new, str);
+	free(str_new);
 	return (str);
 }
-/*static wchar_t *width_wchar(char *format_line, wchar_t *str, char c, typer type)
-{
-	int rozmir;
-	int chlen;
-	int i;
-	wchar_t *str_new;
-	
-	if (str == NULL)
-		return (str);
-	i = -1;
-	while (!ft_isdigit(*format_line) && *format_line)
-	{
-		if (*format_line == '.')
-			return (str);
-		format_line++;
-		if (*format_line == '0')
-			format_line++;
-	}
-	if(*format_line == '\0')
-		return (str);
-	rozmir = ft_atoi(format_line);
-	chlen = rozmir - ft_strlen(str);
-	if (chlen >= 0)
-		str_new = ft_strnew(chlen);
-	else
-		return (str);
-	while (++i < chlen)
-		str_new[i] = c;
-	str_new[i] = '\0';
-	str = ft_strjoin(str_new, str);
-	return (str);
-}*/
-/*static wchar_t *flag_width_pres_maintain_wchar(char *format_line, wchar_t *str, typer type)
-{
-	t_flag flag;
-	int i;
 
-	i = -1;
-	flag.minus = 0;
-	flag.nil = 0;
-	while (format_line[++i] && format_line[i] != '-')
-		;
-	if (format_line[i] != '\0')
-		flag.minus = 1;
-	i = -1;
-	while (format_line[++i] != '.' && format_line[i])
-	{
-		if (format_line[i] == '0' && !ft_isdigit(format_line[i - 1]))
-			flag.nil = 1;
-	}
-	if (flag.nil == 1 && flag.minus != 1)
-		str = width_wchar(format_line, str, '0', type);
-	else
-	 	str = width_wchar(format_line, str, ' ', type);
-	//if (flag.minus == 1)
-	//	str = ft_white_swap_num(str, 0);
-	return (str);
-}*/
 static char *flag_width_pres_maintain_char(char *format_line, char *str, typer type)
 {
 	t_flag flag;
@@ -478,12 +429,12 @@ static int char_maintain(char *format_line,va_list *ap, typer *type, perech *dat
 		{
 			c = '\0';
 			str = ft_strnew(0);
-			//str[0] = ' ';
 			str[0] = '\0';
 			str = flag_width_pres_maintain_char(format_line, str, *type);
-			//ft_putstr_null(str + 1);
-			write(1, str + 1, ft_strlen(str + 1) + 1);
-			return (ft_strlen(str + 1) + 1);
+			i = ft_strlen(str + 1);
+			write(1, str + 1, i + 1);
+			free(str);
+			return (i + 1);
 		}
 		else
 		{
@@ -534,6 +485,7 @@ static char *width_str(char *format_line, char *str, char c, typer type)
 		str_new[i] = c;
 	str_new[i] = '\0';
 	str = ft_strjoin(str_new, str);
+	free(str_new);
 	return (str);
 }
 
@@ -612,8 +564,6 @@ int ft_wstrlen(wchar_t *wstr)
 		res = 0; 
         while (wstr && wstr[++i] != L'\0')
 		{
-			if (wstr[i] == L'\U0000fffd' || wstr[i] == L'〰')
-				i++;
 			size = ft_size_bin(wstr[i]);
 			if (size <= 7)
             	res += 1;
@@ -634,14 +584,11 @@ int write_wstr(wchar_t *wstr)
 
 	i = -1;
 	counter = 0;
-	//len = ft_wstrlen(wstr);
 	if (!wstr)
 	{
 		write(1, "(null)", 6);
 		return (6);
 	}
-	//if (wstr[0] =='0')
-	//	ft_putstr((char*)wstr);
 	while (*wstr && *wstr != L'\0')
 	{
 		counter += write_wchar(*wstr);
@@ -680,6 +627,7 @@ static wchar_t *width_wstr(char *format_line, wchar_t *str, wchar_t c, int wstrl
 		str_new[i] = c;
 	str_new[i] = L'\0';
 	str = ft_wstrjoin(str_new, str,ft_strlen((char*)str));
+	free(str_new);
 	return (str);
 }
 
@@ -706,7 +654,8 @@ static wchar_t *precision_wstr(char *format_line,wchar_t *str, int wstrlen, int 
 	else 
 		return (str);
 	str_new = ft_wstrncpy(str_new, str, wstrlen + chlen);
-	str_new[wstrlen + chlen] = L'\0';
+	//free(str);
+//	str_new[wstrlen + chlen] = L'\0';
 	return (str_new);
 }
 
@@ -771,6 +720,7 @@ static char *width_ptr(char *format_line, char *str, char c, typer type)
 	int chlen;
 	int i;
 	char *str_new;
+	char *str_free;
 	
 	if (str == NULL)
 		return (str);
@@ -801,8 +751,12 @@ static char *width_ptr(char *format_line, char *str, char c, typer type)
 		str_new[i] = c;
 	str_new[i] = '\0';
 	str = ft_strjoin(str_new, str);
-	if (c == '0')
+	free(str_new);
+	if (c == '0' && (str_free = str))
+	{
 		str = ft_strjoin("0x", str);
+		free(str_free);
+	}
 	return (str);
 }
 
@@ -821,7 +775,7 @@ static char *precision_ptr(char *format_line,char *str, typer type, int *prec)
 		return (str);
 	*prec = 1;
 	if (*(format_line + 1) == '0' || !ft_isdigit(*(format_line + 1)))
-		return ("0x");
+		return (ft_strdup("0x"));
 	rozmir = ft_atoi((format_line + 1));
 	str += 2;
 	chlen = rozmir - ft_strlen(str); 
@@ -833,6 +787,7 @@ static char *precision_ptr(char *format_line,char *str, typer type, int *prec)
 		str_new[i] = '0';
 	str_new[i] = '\0';
 	str_new_2 = ft_strjoin(str_new, str);
+	free(str_new);
 	str_new_2 = ft_strjoin("0x", str_new_2);
 	return (str_new_2);
 }
@@ -841,6 +796,7 @@ static int ptr_maintain(char *format_line,va_list *ap,typer *type,perech *data)
 {
 	size_t num_ptr;
 	char *str;
+	char *str_free;
 	int prec;
 	int i;
 
@@ -848,12 +804,9 @@ static int ptr_maintain(char *format_line,va_list *ap,typer *type,perech *data)
 	prec = 0;
 	num_ptr = va_arg(*ap, size_t);
 	str = ft_itoa_base_size(num_ptr, 16, 0);
-	/*if (num_ptr != 0 && num_ptr > 1000000000)
-		str = ft_strjoin("0x7fff", str);
-	//else if (num_ptr != 0 && num_ptr < 1000000000)
-	//	str = ft_strjoin("0x10", str);
-	else*/
-		str = ft_strjoin("0x", str);
+	str_free = str;
+	str = ft_strjoin("0x", str);
+	free(str_free);
 	str = precision_ptr(format_line, str, *type, &prec);
 	while (format_line[i] && format_line[i] != '0')
 		i++;
@@ -871,8 +824,10 @@ static int ptr_maintain(char *format_line,va_list *ap,typer *type,perech *data)
 		i++;
 	if (format_line[i])
 		str = ft_white_swap_num(str, 0);
-	write(1, str, ft_strlen(str));
-	return (ft_strlen(str));
+	i = ft_strlen(str);
+	write(1, str, i);
+	free(str);
+	return (i);
 }
 
 //ptr_end------------------------------------------------------------------------------------------------------------------------
@@ -933,12 +888,15 @@ static char *width_num(char *format_line, char *str, char c, typer type)
 	str_new[i] = '\0';
 	if (c == ' ' && sign == 1 && !(sign = 0))
 		str--;
-	str_new_2 = ft_strjoin(str_new, str);
+	str_new_2 = str;
+	str = ft_strjoin(str_new, str);
+	free(str_new);
 	if (sign == 1)
-		str--;
-	if (str[0] == '-' && c != ' ')
-		str_new_2 = ft_strjoin("-", str_new_2);
-	return (str_new_2);
+		str_new_2--;
+	if (str_new_2[0] == '-' && c != ' ')
+		str = ft_strjoin("-", str);
+	free(str_new_2);
+	return (str);
 }
 
 
@@ -947,12 +905,16 @@ static char *precision_num(char *format_line,char *str, typer type, int *nil)
 	int rozmir;
 	int chlen;
 	int hash;
+	int sign;
 	char *str_new;
 	char *str_new_2;
+	char *str_new_3;
 	int i;
 
 	i = -1;
 	hash = 0;
+	sign = 0;
+	str_new_3 = NULL;
 	while (*format_line != '.' && *format_line)
 	{
 		if (*format_line == '#')
@@ -969,7 +931,7 @@ static char *precision_num(char *format_line,char *str, typer type, int *nil)
 		return (str);
 	}
 	rozmir = ft_atoi((format_line + 1));
-	if (str[0] == '-')
+	if (str[0] == '-' && (sign = 1))
 		str++;
 	chlen = rozmir - ft_strlen(str); 
 	if (chlen >= 0)
@@ -981,12 +943,16 @@ static char *precision_num(char *format_line,char *str, typer type, int *nil)
 	while (++i < chlen)
 		str_new[i] = '0';
 	str_new[i] = '\0';
-	str_new_2 = ft_strjoin(str_new, str);
-	str--;
-	if (str[0] == '-')
-	str = ft_strjoin("-", str_new_2);
-	else
-		return (str_new_2);
+	str_new_2 = str;
+	str = ft_strjoin(str_new, str);
+	free(str_new);
+	if (sign)
+		str_new_2--;
+	if (str_new_2[0] == '-' && (str_new_3 = str))
+		str = ft_strjoin("-", str);
+	free(str_new_2);
+	if (str_new_3)
+	free(str_new_3);
 	return (str);
 }
 
@@ -994,8 +960,10 @@ static char *flag_width_pres_maintain(char *format_line, char *str, typer type)
 {
 	t_flag flag;
 	int i;
+	char *str_free;
 
 	i = 0;
+	str_free = NULL;
 	flag.minus = 0;
 	flag.plus = 0;
 	flag.space = 0;
@@ -1029,22 +997,30 @@ static char *flag_width_pres_maintain(char *format_line, char *str, typer type)
 	//	return (str); 
 	if (flag.nil == 1)
 		str = width_num(format_line, str, '0', type);
-	if (flag.hash == 1 && (type == o  || type == O)&& str[0] != '0')
+	if (flag.hash == 1 && (type == o  || type == O)&& str[0] != '0' && (str_free = str))
 		str = ft_strjoin("0", str);
-	else if (flag.hash == 1 && type == x)
+	else if (flag.hash == 1 && type == x && (str_free = str))
 		str = ft_strjoin("0x", str);
-	else if (flag.hash == 1 && type == X)
+	else if (flag.hash == 1 && type == X && (str_free = str))
 		str = ft_strjoin("0X", str);
+	if (str_free)
+		free(str_free);
 	if (type == u || type == d || type == i || type == none)
 	{
 		if (flag.plus == 1)
 		{
-			if (str[0] != '-' && flag.space != 1 && type != u)
+			if (str[0] != '-' && flag.space != 1 && type != u && (str_free = str))
+			{
 				str = ft_strjoin("+", str);
+				free(str_free);
+			}
 		}
 	}
-	if (str[0] != '-' && flag.space == 1 && type != u && type != x && type != o && type != O && type != X)
+	if (str[0] != '-' && flag.space == 1 && type != u && type != x && type != o && type != O && type != X && (str_free = str))
+	{
 		str = ft_strjoin(" ", str);
+		free(str_free);
+	}
 	if (str[0] == '-' || type == u)
 		flag.space = 0;
 	if (flag.nil == 0)
@@ -1314,6 +1290,7 @@ static int num_maintain(char *format_line, va_list *ap, typer *type, perech *dat
 	int i;
 	intmax_t num;
 	char *str;
+	char *str_free;
 
 	num = 0;
 	i = 0;
@@ -1374,8 +1351,11 @@ static int num_maintain(char *format_line, va_list *ap, typer *type, perech *dat
 		}
 	}
 	str = flag_width_pres_maintain(format_line, str, *type);
-	write(1, str, ft_strlen(str));
-	return (ft_strlen(str));
+	i = ft_strlen(str);
+	write(1, str, i);
+	//if (ft_strcmp(str, "-9223372036854775808"))
+		free(str);
+	return (i);
 }
 static int char_maintain_percent(char *format_line,va_list *ap, typer *type, perech *data)
 {
@@ -1387,13 +1367,16 @@ static int char_maintain_percent(char *format_line,va_list *ap, typer *type, per
 		str[0] = '%';
 		str[1] = '\0';
 		str = flag_width_pres_maintain_char(format_line, str, *type);
-		write(1, str, ft_strlen(str));
-		return (ft_strlen(str));
+		i = ft_strlen(str);
+		write(1, str, i);
+		free(str);
+		return (i);
 }
 int error_maintain(char *format_line, typer *type)
 {
 	char c;
 	char *str;
+	char *str_free;
 	int i;
 
 	i = 0;
@@ -1404,9 +1387,12 @@ int error_maintain(char *format_line, typer *type)
 	str = ft_strnew(1);
 	str[0] = c;
 	str[1] = '\0';
+	str_free = str;
 	str = flag_width_pres_maintain_char(format_line, str, *type);
-	write(1, str, ft_strlen(str));
-	return (ft_strlen(str));
+	i = ft_strlen(str);
+	write(1, str, i);
+	free(str);
+	return (i);
 }
 static int way_definder(char *format_line, va_list *ap, typer *type, perech *data)
 {
@@ -1434,6 +1420,7 @@ static int way_definder(char *format_line, va_list *ap, typer *type, perech *dat
 		retur = char_maintain_percent(format_line, ap, type, data);
 	else
 		retur = error_maintain(format_line, type);
+	free(format_line);
 	return (retur);
 }
 //num_end------------------------------------------------------------------------------------------------------------------------------------------
@@ -1443,15 +1430,12 @@ int ft_printf(char *format,...)
 	perech data;
 	typer type;
 	int retur;
-	char *str;
-	char *str_copy;
 	va_list ap;
 
 	retur = 0;
 	va_start(ap, format);
 	while(*format)
 	{
-		str = NULL;
 		data = no;
 		type = none;
 		retur += proc_finder(&format);
@@ -1463,14 +1447,14 @@ int ft_printf(char *format,...)
 	return (retur);
 }
 
-/*int main(void)
-{
-	wchar_t l = L'米';
-	int i=42;
-	char c;
-	c = 'a';
-//	printf("%d\n", l);
-	setlocale(LC_ALL, "en_US.UTF-8");
-	printf("%d\n", printf("{%05p}", &way_definder));
-	printf("%d\n", ft_printf("{%05p}", &way_definder));
+ /*int main(void)
+ {
+ 	wchar_t l = L'米';
+ 	int i=42;
+ 	char c;
+ 	c = 'a';
+// //	printf("%d\n", l);
+ 	setlocale(LC_ALL, "en_US.UTF-8");
+ 	printf("%d\n", printf("%4.15S\n", L"我是一只猫。"));
+ 	printf("%d\n", ft_printf("%4.15S\n", L"我是一只猫。"));
 }*/

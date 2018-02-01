@@ -41,6 +41,7 @@ char *ft_white_swap(char *str)
         res = ft_strjoin(res, white);
         free(tmp_1);
         free(tmp_2);
+        free(str);
     }
     return (res);
 }

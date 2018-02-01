@@ -33,7 +33,7 @@ char *ft_itoa_base_long_unsigned(unsigned long value, int base, int whatcase)
 	if (whatcase == 0)
 		hex = "0123456789abcdef";
 	i = ft_size(value, base);
-	res = (char*)malloc(sizeof(char) * i + 1);
+	res = (char*)malloc(sizeof(char) * (i + 1));
 	res[i] = '\0';
 	while (i)
 	{

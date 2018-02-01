@@ -37,14 +37,14 @@ char *ft_itoa_base_ssize(ssize_t value, int base, int whatcase)
 	if (value < 0 && (sign = 1))
 		if (value < -9223372036854775807)
 		{
-			res = ft_strnew(i);
-			res = "-9223372036854775808";
+			res = ft_strnew(20);
+			res = ft_strcpy(res,"-9223372036854775808");
 			return (res);
 		}
 	if (value == -1)
 	{
 		res = ft_strnew(2);
-		res = "-1";
+		res =  ft_strcpy(res,"-1");
 		return (res);
 	}
 	res = (char*)malloc(sizeof(char) * i + sign + 1);

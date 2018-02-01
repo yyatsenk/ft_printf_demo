@@ -39,6 +39,7 @@ wchar_t *ft_white_swap_wstr(wchar_t *str, int wstrlen)
         res = ft_wstrjoin(res, white, wstrlen);
         free(tmp_1);
         free(tmp_2);
+        free(str);
     }
     return (res);
 }
