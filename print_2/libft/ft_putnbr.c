@@ -15,23 +15,17 @@
 void	ft_putnbr(int n)
 {
 	int	m;
-	int n_copy;
 
-	n_copy = n;
 	if (n < 0)
 	{
 		ft_putchar('-');
-		if (n_copy == -2147483648)
-			n++;
-		n = (unsigned int)(-n);
-		if (n > 9)
-			ft_putnbr(n / 10);
-		m = (n % 10);
-		if (n_copy == -2147483648)
-			m++;
+		n = n * (-1);
+		ft_putnbr((unsigned int)n / 10);
+		m = ((unsigned int)n % 10);
 		ft_putchar(m + '0');
 	}
 	else
+	{
 		if (n > 9)
 		{
 			ft_putnbr(n / 10);
@@ -39,4 +33,5 @@ void	ft_putnbr(int n)
 		}
 		else
 			ft_putchar(n + '0');
+	}
 }

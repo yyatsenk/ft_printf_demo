@@ -12,25 +12,28 @@
 
 #include "libft.h"
 
-static int ft_size(size_t nb, int base)
+static int	ft_size(size_t nb, int base)
 {
-	int size = 1;
+	int		size;
 
+	size = 1;
 	while (nb >= (size_t)base)
 	{
 		nb /= base;
 		++size;
 	}
-	return size;
+	return (size);
 }
 
-char *ft_itoa_base_size(size_t value, int base, int whatcase)
+char		*ft_itoa_base_size(size_t value, int base, int whatcase)
 {
-	int sign = 0;
-	int i;
-	char *res;
-	char *hex = "0123456789ABCDEF";
+	int		sign;
+	int		i;
+	char	*res;
+	char	*hex;
 
+	hex = "0123456789ABCDEF";
+	sign = 0;
 	if (whatcase == 0)
 		hex = "0123456789abcdef";
 	i = ft_size(value, base);
@@ -44,5 +47,5 @@ char *ft_itoa_base_size(size_t value, int base, int whatcase)
 		value /= base;
 		--i;
 	}
-	return res;
+	return (res);
 }

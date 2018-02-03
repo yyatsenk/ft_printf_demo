@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-wchar_t		*ft_wstrjoin(wchar_t *s1, wchar_t *s2, int wstrlen)
+wchar_t		*ft_wstrjoin(wchar_t *s1, wchar_t *s2)
 {
 	int		i;
 	int		sum;
@@ -24,13 +24,13 @@ wchar_t		*ft_wstrjoin(wchar_t *s1, wchar_t *s2, int wstrlen)
 	sum = 0;
 	if (!s1 || !s2)
 		return (0);
-	while (s1[i] != '\0')
-		i++;
-	sum = i - 1;
-	i = -1;
-	while (s2[++i] != '\0')
-		sum++;
-	if (!(p = (wchar_t *)malloc(wstrlen)))
+	if (!*s1)
+		return (s2);
+	if (!*s2)
+		return (s1);
+	sum = ft_wstrlen(s1);
+	sum += ft_wstrlen(s2);
+	if (!(p = (wchar_t *)malloc(sizeof(wchar_t) * (sum + 1))))
 		return (NULL);
 	while (s1[++j] != '\0')
 		p[j] = s1[j];

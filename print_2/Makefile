@@ -13,7 +13,7 @@
 NAME = libftprintf.a
 NAME_L = libft.a
 SRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c \
-					libft/ft_isdigit.c libft/ft_isprint.c libft/ft_itoa_long.c libft/ft_lstadd.c libft/ft_lstdel.c \
+					libft/ft_isdigit.c libft/ft_isprint.c libft/ft_itoa_l.c libft/ft_lstadd.c libft/ft_lstdel.c \
 					libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstmap.c libft/ft_lstnew.c libft/ft_memalloc.c \
 					libft/ft_memccpy.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memdel.c \
 					libft/ft_memmove.c libft/ft_memset.c libft/ft_putchar.c libft/ft_putchar_fd.c libft/ft_putendl.c \
@@ -25,10 +25,10 @@ SRC = libft/ft_atoi.c libft/ft_bzero.c libft/ft_isalnum.c libft/ft_isalpha.c lib
 					libft/ft_strnstr.c libft/ft_strrchr.c libft/ft_strsplit.c libft/ft_strstr.c libft/ft_strsub.c \
 					libft/ft_strtrim.c libft/ft_tolower.c libft/ft_toupper.c libft/ft_strlen_num.c libft/ft_list_size.c \
 					libft/ft_whiteskip.c libft/ft_num_of_words.c libft/ft_strlen_until_char.c libft/ft_itoa_base.c\
-					typizator.c libft/ft_itoa_long_long.c libft/ft_white_swap.c modify.c width.c\
-					flagerson.c presicion.c char_maneger.c libft/ft_itoa_long_unsigned.c \
-					libft/ft_itoa_long_long_unsigned.c libft/ft_itoa_base_long.c libft/ft_itoa_base_long_unsigned.c\
-					libft/ft_itoa_base_long_long.c libft/ft_itoa_base_unsigned_long_long.c
+					libft/ft_itoa_l_l.c libft/ft_white_swap.c \
+					libft/ft_itoa_l_u.c \
+					libft/ft_itoa_l_l_u.c libft/ft_itoa_base_l.c libft/ft_itoa_base_l_u.c\
+					libft/ft_itoa_base_l_l.c libft/ft_itoa_base_u_l_l.c
 LIB_NAME = libft/libft.h
 OBJ = ./*.o
 FLAG = -c

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-wchar_t	*ft_wstrncpy(wchar_t *dst,wchar_t *src, size_t len)
+wchar_t	*ft_wstrncpy(wchar_t *dst, wchar_t *src, size_t len)
 {
 	size_t i;
 	size_t counter;
@@ -30,7 +30,6 @@ wchar_t	*ft_wstrncpy(wchar_t *dst,wchar_t *src, size_t len)
 	i = -1;
 	while (src[++i] != '\0' && i < res)
 		dst[i] = src[i];
-	while (i < res)
-		dst[i++] = '\0';
+	dst[i] = L'\0';
 	return (dst);
 }

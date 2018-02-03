@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static size_t	string_length(ssize_t n)
+static size_t		string_length(ssize_t n)
 {
-	size_t i;
+	size_t			i;
 
 	i = 1;
 	while (n /= 10)
@@ -22,10 +22,10 @@ static size_t	string_length(ssize_t n)
 	return (i);
 }
 
-char			*ft_itoa_long_ssize(ssize_t n)
+char				*ft_itoa_long_ssize(ssize_t n)
 {
 	size_t			str_len;
-	ssize_t		    tmp_n;
+	ssize_t			tmp_n;
 	char			*str;
 
 	str_len = string_length(n);
